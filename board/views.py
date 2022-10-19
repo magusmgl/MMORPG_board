@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
-
+from django.views.generic import TemplateView, ListView
+from .models import Advertisement
 
 # Create your views here.
-class BoardPageView(TemplateView):
-    template_name = 'board.html'
+class BoardPageView(ListView):
+    model = Advertisement
+    template_name = 'board/board.html'
