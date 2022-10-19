@@ -3,4 +3,7 @@
 {% block title %}Notice board{% endblock title %}
 
 {% block content %}
+{% for ad in object_list %}
+    <div><a href="#">{{ ad.tttle }}</a></div>
+{% endfor %}
 {% endblock content %}
