@@ -7,11 +7,10 @@ urlpatterns = [
           # Django admin
           path('admin/', admin.site.urls),
               # Managment user
-
-          path('accounts/', include('django.contrib.auth.urls')),
+          # path('accounts/', include('django.contrib.auth.urls')),
           # ckeditor
           path('ckeditor/', include('ckeditor_uploader.urls')),
           # Local apps
-          path('accounts/', include('accounts.urls')),
+          path('accounts/', include('allauth.urls')),
           path('', include('board.urls')),
           ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
