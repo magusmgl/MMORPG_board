@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import BoardPageView
+from .views import AdListView, AdDetailView
 
 urlpatterns = [
-    path('', BoardPageView.as_view(), name='notice_board')
+    path('', AdListView.as_view(), name='ad_list'),
+    path('<uuid:pk>/', AdDetailView.as_view(), name='ad_detail'),
 ]
