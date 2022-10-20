@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     # Third-party
     'ckeditor',
     'ckeditor_uploader',
+    'crispy_forms',
+    'crispy_bootstrap5',
     # Local
     'accounts.apps.AccountsConfig',
     'board.apps.BoardConfig',
@@ -132,3 +134,6 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_REDIRECT_URL = 'ad_list'
+LOGOUT_REDIRECT_URL = 'ad_list'
