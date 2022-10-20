@@ -1,24 +1,45 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
+from django.contrib.auth import get_user_model
 
-from .views import BoardPageView
+from .views import AdListView, AdDetailView
+from .models import Advertisement
 
 
 # Create your tests here.
-class BoardPageTest(TestCase):
-    def setUp(self) -> None:
-        url = reverse('notice_board')
-        self.response = self.client.get(url)
+class BoardTest(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        User = get_user_model()
+        user = User.objects.create_user(username='testuser',
+                                        first_name='testuser_name',
+                                        last_name='testuser_last_name',
+                                        email='testuser@emai.ru',
+                                        password='testpass123',
+                                        )
+        cls.ad = Advertisement.objects.create(
+            author=user,
+            title='some title',
+            content_upload='<h1>some content<h1>'
+        )
 
-    def test_url_exists_at_correct_location(self):
-        self.assertEqual(self.response.status_code, 200)
+    def test_ad_listing(self):
+        self.assertEqual(f'{self.ad.author}', 'testuser')
+        self.assertEqual(f'{self.ad.title}', 'some title')
+        self.assertEqual(f'{self.ad.content_upload}', '<h1>some content<h1>')
 
-    def test_boardpage_template(self):
-        self.assertTemplateUsed(self.response, 'board.html')
-
-    # def test_boardpage_contains_correct_html(self):
-    #     self.assertContains(self.response, 'notice board')
-
-    def test_boardpage_url_resolves_boardpageview(self):
+    def test_ad_list_view(self):
         view = resolve('/')
-        self.assertEqual(view.func.__name__, BoardPageView.as_view().__name__)
+        response = self.client.get(reverse('ad_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'board/ad_list.html')
+        self.assertContains(response, 'Ads board')
+        self.assertEqual(view.func.__name__, AdListView.as_view().__name__)
+
+    def test_ad_detail_view(self):
+        response = self.client.get(self.ad.get_absolute_url())
+        no_response = self.client.get('/ad/232313')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(no_response.status_code, 404)
+        self.assertTemplateUsed(response, 'board/ad_detail.html')
+        self.assertContains(response, '<h1>some content<h1>')
