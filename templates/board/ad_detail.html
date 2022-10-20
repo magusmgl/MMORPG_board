@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+
+{% block title %}Notice board{% endblock title %}
+
+{% block content %}
+<div>
+    <h2>{{ ad.tttle }} </h2>
+    <p>{{ ad.author }}</p>
+    <p>{{ ad.date }}</p>
+    {{ ad.content_upload|safe }}
+</div>
+{% endblock content %}

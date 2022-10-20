@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block title %}Af board{% endblock title %}
+
+{% block content %}
+<h2>Ads board</h2>
+{% for ad in ad_list %}
+<div>
+    <h4>
+        <a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a>
+    </h4>
+    {{ ad.content_upload|safe }}
+</div>
+{% endfor %}
+{% endblock content %}
