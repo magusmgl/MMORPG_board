@@ -135,5 +135,8 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 LOGIN_REDIRECT_URL = 'ad_list'
 LOGOUT_REDIRECT_URL = 'ad_list'
