@@ -1,13 +1,20 @@
+import uuid
+
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext_lazy
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # Create your models here.
 class Advertisement(models.Model):
+    id = models.UUIDField(primary_key=True,
+                          default=uuid.uuid4,
+                          editable=False
+                          )
     author = models.ForeignKey(get_user_model(),
                                db_column='ad author',
                                on_delete=models.CASCADE,
@@ -24,12 +31,15 @@ class Advertisement(models.Model):
                             db_column='date',
                             )
     content_upload = RichTextUploadingField(blank=True,
-                                     null=True,
-                                     db_column='content_upload',
-                                     )
+                                            null=True,
+                                            db_column='content_upload',
+                                            )
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self) -> str:
+        return reverse('ad_detail', args=[str(self.id)])
 
 
 class Response(models.Model):
