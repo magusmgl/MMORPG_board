@@ -3,14 +3,20 @@
 {% block title %}Af board{% endblock title %}
 
 {% block content %}
-<h2>Ads board</h2>
+<h2 xmlns="http://www.w3.org/1999/html">Ads board</h2>
 {% for ad in ad_list %}
-<div>
-    <h4>
-        <a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a>
-    </h4>
-    <p>{{ ad.category }}</p>
-    {{ ad.content_upload|safe }}
+<div class="card">
+    <div class="card-header">
+        <span class="font-weight-bold"><a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a> </span> &middot;
+        <span class="text-muted">by {{ ad.author }} | {{ ad.date }}</span>
+    </div>
+    <div class="card-body">
+        {{ ad.content_upload|safe }}
+    </div>
+    <div class="card-footer text-center text-muted">
+
+    </div>
 </div>
+<br>
 {% endfor %}
 {% endblock content %}
