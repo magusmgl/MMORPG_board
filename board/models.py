@@ -11,6 +11,27 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class Advertisement(models.Model):
+    tanks = 'TH'
+    gila = 'GL'
+    dd = 'DD'
+    merchants = 'MR'
+    questgivers = 'QQ'
+    blacksmiths = 'BM'
+    leatherworkers = 'LW'
+    potions = 'PT'
+    spell_masters = 'SM'
+
+    AD_TYPE = [
+        (tanks, 'Танки'),
+        (gila, 'Хилы'),
+        (dd, 'ДД'),
+        (merchants, 'Торговцы'),
+        (questgivers, 'Квестгиверы'),
+        (blacksmiths, 'Кузнецы'),
+        (leatherworkers, 'Кожевники'),
+        (potions, 'Зельевары'),
+        (spell_masters, 'Мастера заклинаний')
+    ]
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           editable=False
@@ -21,6 +42,13 @@ class Advertisement(models.Model):
                                verbose_name=pgettext_lazy('text for Advertisement model', 'Advertisement author'),
                                help_text=_('choose author of advertisement')
                                )
+    category = models.CharField(max_length=2,
+                                choices=AD_TYPE,
+                                default=tanks,
+                                db_column='ad category',
+                                verbose_name=pgettext_lazy('text for Advertisement model', 'Advertisement category'),
+                                help_text=_('choose category of advertisement')
+                                )
     title = models.CharField(default='',
                              db_column='title',
                              max_length=200,

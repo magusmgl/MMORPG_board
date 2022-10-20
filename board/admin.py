@@ -7,15 +7,17 @@ from .models import Advertisement, Response
 
 class AdvertisementAdminForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget)
+
     class Meta:
         model = Advertisement
-        fields = ('author', 'title', 'content_upload')
+        fields = ('author', 'title', 'category', 'content_upload')
 
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
     form = AdvertisementAdminForm
-    list_display = ('author', 'title', 'content_upload')
+    list_display = ('author', 'title', 'category', 'content_upload')
+
 
 @admin.register(Response)
 class ResponseAdmin(admin.ModelAdmin):

@@ -9,6 +9,7 @@
     <h4>
         <a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a>
     </h4>
+    <p>{{ ad.category }}</p>
     {{ ad.content_upload|safe }}
 </div>
 {% endfor %}
