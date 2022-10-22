@@ -69,6 +69,10 @@ class Advertisement(models.Model):
     def get_absolute_url(self) -> str:
         return reverse('ad_detail', args=[str(self.id)])
 
+    class Meta:
+        verbose_name = 'Advertisement'
+        verbose_name_plural = 'Advertisements'
+        ordering = ['date', 'title']
 
 class Response(models.Model):
     author = models.ForeignKey(get_user_model(),
