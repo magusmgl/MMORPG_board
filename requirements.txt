@@ -6,3 +6,4 @@ django_ckeditor==6.5.1
 django-crispy-forms==1.14.0
 crispy-bootstrap5==0.6
 django-allauth>=0.51.0
+environs[django]==9.5.0
