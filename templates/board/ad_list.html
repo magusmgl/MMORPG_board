@@ -5,16 +5,17 @@
 {% block content %}
 <h2 xmlns="http://www.w3.org/1999/html">Ads board</h2>
 {% for ad in ad_list %}
-<div class="card">
+<div class="card" style="width: 60rem;">
     <div class="card-header">
-        <span class="font-weight-bold"><a href="{{ ad.get_absolute_url }}">{{ ad.title }}</a> </span> &middot;
-        <span class="text-muted">by {{ ad.author }} | {{ ad.date }}</span>
+        <span class="font-weight-bold ">{{ ad.category }} </span>
     </div>
     <div class="card-body">
-        {{ ad.content_upload|safe }}
+        <span class="card-title">{{ ad.title }}</span>
+        {{ ad.content_upload|safe|truncatewords_html:50 }}
+        <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Read</a>
     </div>
     <div class="card-footer text-center text-muted">
-
+        <span class="text-muted">by {{ ad.author }} | {{ ad.date|date:'d-m-Y' }}</span>
     </div>
 </div>
 <br>
