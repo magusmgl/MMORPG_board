@@ -6,8 +6,13 @@
 <div>
     <h2>{{ ad.tttle }} </h2>
     <p>{{ ad.category }}</p>
-    <p>{{ ad.author }}</p>
-    <p>{{ ad.date }}</p>
-    {{ ad.content_upload|safe }}
+    <p>{{ ad.author }} | {{ ad.date }}</p>
+    <p>
+        {{ ad.content_upload|safe }}
+    </p>
+    <p><a class="btn btn-secondary" href="{% url 'ad_edit' ad.pk %}">Edit ad</a>
+        <a class="btn btn-danger" href="{% url 'ad_delete' ad.pk %}">Delete ad</a></p>
+    <p>Back to <a href="{% url 'ads_list' %}">All Advertisements</a>.</p>
+
 </div>
 {% endblock content %}

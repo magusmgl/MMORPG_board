@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2 xmlns="http://www.w3.org/1999/html">Ads board</h2>
-{% for ad in ad_list %}
+{% for ad in ads_list %}
 <div class="card" style="width: 60rem;">
     <div class="card-header">
         <span class="font-weight-bold ">{{ ad.category }} </span>
@@ -12,11 +12,18 @@
     <div class="card-body">
         <span class="card-title">{{ ad.title }}</span>
         {{ ad.content_upload|safe|truncatewords_html:50 }}
-        <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Read</a>
+
+        <a href="{{ ad.get_absolute_url }}" class="btn btn-primary">Read ad</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'ad_edit' ad.pk %}" class="btn btn-primary">Edit ad</a>
+        <a href="{% url 'ad_delete' ad.pk %}" class="btn btn-primary">Delete ad</a>
+        {% endif %}
     </div>
     <div class="card-footer text-center text-muted">
         <span class="text-muted">by {{ ad.author }} | {{ ad.date|date:'d-m-Y' }}</span>
     </div>
+
+
 </div>
 <br>
 {% endfor %}
