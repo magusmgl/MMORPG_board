@@ -119,8 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_REDIRECT_URL = 'ad_list'
-ACCOUNT_LOGOUT_REDIRECT = 'ad_list'
+LOGIN_REDIRECT_URL = 'ads_list'
+ACCOUNT_LOGOUT_REDIRECT = 'ads_list'
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
