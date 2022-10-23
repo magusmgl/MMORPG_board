@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth import get_user_model
 
-from .views import AdListView, AdDetailView
+from .views import AdsListView, AdDetailView
 from .models import Advertisement
 
 
@@ -30,11 +30,11 @@ class BoardTest(TestCase):
 
     def test_ad_list_view(self):
         view = resolve('/')
-        response = self.client.get(reverse('ad_list'))
+        response = self.client.get(reverse('ads_list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'board/ad_list.html')
         self.assertContains(response, 'Ads board')
-        self.assertEqual(view.func.__name__, AdListView.as_view().__name__)
+        self.assertEqual(view.func.__name__, AdsListView.as_view().__name__)
 
     def test_ad_detail_view(self):
         response = self.client.get(self.ad.get_absolute_url())
