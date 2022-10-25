@@ -74,19 +74,22 @@ class Advertisement(models.Model):
         verbose_name_plural = 'Advertisements'
         ordering = ['date', 'title']
 
-class Response(models.Model):
+class Reply(models.Model):
+    advertise = models.ForeignKey(Advertisement,
+                                  on_delete=models.CASCADE,
+                                  )
     author = models.ForeignKey(get_user_model(),
                                on_delete=models.CASCADE)
 
-    advertise = models.ForeignKey(Advertisement,
-                                  on_delete=models.CASCADE,
-                                  related_name='responses',
-                                  )
-    response = models.TextField(db_column='response_text',
-                                max_length=200,
-                                verbose_name=pgettext_lazy('text for Response model', 'Response text'),
-                                help_text=_('enter text of response')
-                                )
+
+    reply = models.TextField(db_column='reply ',
+                             max_length=200,
+                             verbose_name=pgettext_lazy('text for Reply model', 'Reply text'),
+                             help_text=_('enter text of reply')
+                             )
 
     def __str__(self):
-        return self.response
+        return self.reply
+
+    def get_absolute_url(self):
+        return reverse('ad_list')

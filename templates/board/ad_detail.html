@@ -1,18 +1,45 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Notice board{% endblock title %}
 
 {% block content %}
-<div>
+<div class="ad-entry">
     <h2>{{ ad.tttle }} </h2>
-    <p>{{ ad.category }}</p>
-    <p>{{ ad.author }} | {{ ad.date }}</p>
+    <p>{{ ad.category }}&middot;
+        {{ ad.author }} | {{ ad.date }}</p>
     <p>
         {{ ad.content_upload|safe }}
     </p>
+
     <p><a class="btn btn-secondary" href="{% url 'ad_edit' ad.pk %}">Edit ad</a>
         <a class="btn btn-danger" href="{% url 'ad_delete' ad.pk %}">Delete ad</a></p>
-    <p>Back to <a href="{% url 'ads_list' %}">All Advertisements</a>.</p>
 
+    <h4>Reply's</h4>
+    {% for rep in ad.reply_set.all %}
+    <p> {{ rep.author }} &middot; {{ rep }}</p>
+    {% endfor %}
+    <hr>
+
+    <h4>Add reply</h4>
+    {% if user.is_authenticated %}
+    <form action="" method="post">
+        <div class="mb-1 row">
+            <div class="col-sm-10">
+                <!--                //todo-->
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ author_rep }}">
+            </div>
+        </div>
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        <button class="btn btn-success" type="submit">Save</button>
+    </form>
+    {% else %}
+    <p><a href="{% url 'account_login' %}">Log in</a> to leave a reply</p>
+    {% endif %}
+    <br>
+
+    <p>Back to <a href="{% url 'ads_list' %}">All Advertisements</a>.</p>
 </div>
 {% endblock content %}
