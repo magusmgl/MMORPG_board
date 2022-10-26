@@ -1,0 +1,9 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<h1>Accept reply</h1>
+<p>You have accept a reply from {{ reply.author.username }}.
+    The user will be sent an email to {{ reply.author.email}}</p>
+<hr>
+<p>Back to <a href="{% url 'replays_list' %}">My replyas</a>.</p>
+{% endblock content %}
