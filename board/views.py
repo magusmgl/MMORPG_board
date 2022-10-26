@@ -10,8 +10,10 @@ from django.views.generic import (
     UpdateView,
     FormView,
 )
+
 from .models import Advertisement, Reply
 from .forms import AdvertisementForm, ReplyForm
+from .filters import ReplyFilter
 
 
 class AdsListView(ListView):
@@ -122,3 +124,20 @@ class ReplaysSearchView(ListView):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
         return context
+
+
+class ReplyDeleteView(DeleteView):
+    model = Reply
+    template_name = 'board/reply_delete.html'
+    context_object_name = 'reply'
+    success_url = reverse_lazy('replays_list')
+
+
+def accept_reply(request, pk):
+    rep = Reply.objects.get(pk=pk)
+    rep.is_accept = True
+    rep.save()
+    context = {
+        'reply': rep
+    }
+    return render(request, 'board/reply_accept.html', context=context)
