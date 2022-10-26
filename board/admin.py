@@ -32,7 +32,7 @@ class AdvertisementAdmin(admin.ModelAdmin):
 
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('reply', 'author', 'advertise')
+    list_display = ('reply', 'author', 'advertise', 'date', 'is_accept')
     list_display_links = ('author', 'reply')
     search_fields = ('author', 'advertise', 'reply')
     list_filter = ('author', 'advertise')
