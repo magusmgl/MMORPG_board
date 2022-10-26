@@ -10,13 +10,12 @@ from django.views.generic import (
     UpdateView,
     FormView,
 )
-
-from .models import Advertisement
+from .models import Advertisement, Reply
 from .forms import AdvertisementForm, ReplyForm
 
 
-# Create your views here.
 class AdsListView(ListView):
+    '''Список всех объявлений на  главной странице сайта сайте'''
     model = Advertisement
     ordering = '-date'
     context_object_name = 'ads_list'
@@ -30,6 +29,9 @@ class UserAdsListView(ListView):
     context_object_name = 'ads_list'
     template_name = 'board/ad_list.html'
     paginate_by = 10
+
+    def get_queryset(self):
+        return Advertisement.objects.filter(author=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,3 +105,13 @@ class AdDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'board/ad_delete.html'
     success_url = reverse_lazy('ads_list')
     context_object_name = 'ad'
+
+
+class ReplaysAdsListView(ListView):
+    model = Reply
+    template_name = 'board/replays_list.html'
+    context_object_name = 'rep_list'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Reply.objects.filter(advertise__author=self.request.user)
