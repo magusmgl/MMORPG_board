@@ -21,8 +21,13 @@
         <p class="font-weight-bold ">{{ rep.reply }} </p>
 
         <br>
-        <a class="btn btn-success" href="#">Accecpt reply</a>
+        {% if rep.is_accept %}
+        <a class="btn btn-success disabled" aria-disabled="true">Accecpt reply</a>
+        <a class="btn btn-danger disabled" aria-disabled="true">Reject reply</a>
+        {% else %}
+        <a class="btn btn-success" href="{% url 'reply_accept' rep.pk %}">Accecpt reply</a>
         <a class="btn btn-danger" href="{% url 'reply_delete' rep.pk %}">Reject reply</a>
+        {% endif %}
     </div>
 </div>
 <br>
