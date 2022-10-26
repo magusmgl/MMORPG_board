@@ -1,18 +1,29 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Replays{% endblock title %}
 
 {% block content %}
 <br>
 <h2>Replays</h2>
+<form metod="GET">
+    {{ filterset.form|crispy }}
+    <button class="btn btn-primary" type="submit">Find</button>
+</form>
+<hr>
 {% for rep in rep_list %}
 <div class="card">
-        <div class="card-header">
-            <span class="text-muted">by {{ rep.author }} | {{ rep.advertise  }}</span>
-        </div>
-        <div class="card-body">
-            <span class="font-weight-bold ">{{ rep.reply }} </span>
-        </div>
+    <div class="card-header">
+        <span class="text-muted">by {{ rep.author }} &middot; {{ rep.date|date:'d-m-Y' }} |
+            {{ rep.advertise  }} </span>
+    </div>
+    <div class="card-body">
+        <p class="font-weight-bold ">{{ rep.reply }} </p>
+
+        <br>
+        <a class="btn btn-success" href="#">Accecpt reply</a>
+        <a class="btn btn-danger" href="{% url 'reply_delete' rep.pk %}">Reject reply</a>
+    </div>
 </div>
 <br>
 {% endfor %}

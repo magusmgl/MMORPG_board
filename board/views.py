@@ -107,11 +107,18 @@ class AdDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'ad'
 
 
-class ReplaysAdsListView(ListView):
+class ReplaysSearchView(ListView):
     model = Reply
     template_name = 'board/replays_list.html'
     context_object_name = 'rep_list'
     paginate_by = 10
 
     def get_queryset(self):
-        return Reply.objects.filter(advertise__author=self.request.user)
+        queryset = super().get_queryset()
+        self.filterset = ReplyFilter(self.request.GET, queryset)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filterset'] = self.filterset
+        return context
