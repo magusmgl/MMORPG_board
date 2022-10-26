@@ -74,6 +74,7 @@ class Advertisement(models.Model):
         verbose_name_plural = 'Advertisements'
         ordering = ['date', 'title']
 
+
 class Reply(models.Model):
     advertise = models.ForeignKey(Advertisement,
                                   on_delete=models.CASCADE,
@@ -81,12 +82,22 @@ class Reply(models.Model):
     author = models.ForeignKey(get_user_model(),
                                on_delete=models.CASCADE)
 
-
-    reply = models.TextField(db_column='reply ',
+    reply = models.TextField(db_column='reply',
                              max_length=200,
                              verbose_name=pgettext_lazy('text for Reply model', 'Reply text'),
                              help_text=_('enter text of reply')
                              )
+
+    date = models.DateField(auto_now_add=True,
+                            auto_now=False,
+                            db_column='date',
+                            )
+
+    is_accept = models.BooleanField(db_column='is accept',
+                                    default=False,
+                                    verbose_name=pgettext_lazy('text for Reply model', 'is accept'),
+                                    help_text=_('choose status reply')
+                                    )
 
     def __str__(self):
         return self.reply
