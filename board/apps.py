@@ -5,3 +5,6 @@ class BoardConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'board'
     verbose_name = 'Advertisement board'
+
+    def ready(self):
+        from . import signals

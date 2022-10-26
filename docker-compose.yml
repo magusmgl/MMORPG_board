@@ -17,5 +17,8 @@ services:
       - db
     environment:
       - "DJANGO_SECRET_KEY=XmRf_8zFJz2IoUmgnAhcTHd0LAw8lp6KrzvI5Cph9GU"
+      - "EMAIL_HOST_USER=magus.mgl@mail.ru"
+      - "EMAIL_HOST_PASSWORD=N0jSNQBPwRFkhKfmSNh1"
+      - "DEFAULT_FROM_EMAIL=magus.mgl@mail.ru"
 volumes:
   postgres_data:
