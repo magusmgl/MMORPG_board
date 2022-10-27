@@ -1,5 +1,9 @@
 version: "3.9"
 services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
   db:
     image: postgres:13
     volumes:
@@ -15,10 +19,30 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     environment:
       - "DJANGO_SECRET_KEY=XmRf_8zFJz2IoUmgnAhcTHd0LAw8lp6KrzvI5Cph9GU"
       - "EMAIL_HOST_USER=magus.mgl@mail.ru"
       - "EMAIL_HOST_PASSWORD=N0jSNQBPwRFkhKfmSNh1"
       - "DEFAULT_FROM_EMAIL=magus.mgl@mail.ru"
+      - "CELERY_BROKER_URL=redis://redis:6379"
+      - "CELERY_RESULT_BACKEND=redis://redis:6379"
+  worker:
+    restart: always
+    build: .
+    volumes:
+      - .:/code
+    command: celery -A django_project worker -l INFO
+    depends_on:
+      - redis
+      - web
+    environment:
+      - "DJANGO_SECRET_KEY=XmRf_8zFJz2IoUmgnAhcTHd0LAw8lp6KrzvI5Cph9GU"
+      - "EMAIL_HOST_USER=magus.mgl@mail.ru"
+      - "EMAIL_HOST_PASSWORD=N0jSNQBPwRFkhKfmSNh1"
+      - "DEFAULT_FROM_EMAIL=magus.mgl@mail.ru"
+      - "CELERY_BROKER_URL=redis://redis:6379"
+      - "CELERY_RESULT_BACKEND=redis://redis:6379"
+
 volumes:
   postgres_data:
