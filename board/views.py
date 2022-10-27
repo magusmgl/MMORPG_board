@@ -115,7 +115,7 @@ class ReplaysSearchView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Reply.objects.filter(advertise__author=self.request.user)
         self.filterset = ReplyFilter(self.request.GET, queryset)
         return self.filterset.qs
 
