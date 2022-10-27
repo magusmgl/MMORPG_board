@@ -11,7 +11,7 @@
 <div>
     <p>{{ reply.date|date:'d.m.Y' }}</p>
     <h3><a href="http://127.0.0.1:8000{% url  'ad_detail' reply.advertise.pk %}">{{ instance.title }}</a></h3>
-    <p>{{ reply.reply|truncatewords:50 }}</p>
+    <p>{{ reply.reply }}</p>
 </div>
 </body>
 </html>
