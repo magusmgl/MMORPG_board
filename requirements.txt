@@ -8,3 +8,5 @@ crispy-bootstrap5==0.6
 django-allauth>=0.51.0
 environs[django]==9.5.0
 django-filter==22.1
+celery[redis]==5.2.7
+redis==4.3.4
