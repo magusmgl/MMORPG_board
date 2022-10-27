@@ -15,7 +15,6 @@ from .models import Advertisement, Reply
 from .forms import AdvertisementForm, ReplyForm
 from .filters import ReplyFilter
 
-
 class AdsListView(ListView):
     '''Список всех объявлений на  главной странице сайта сайте'''
     model = Advertisement
