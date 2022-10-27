@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply accept</title>
+</head>
+<body>
+<p> Hello {{ reply.author.username }},</p>
+<p>Your reply on the site has been accepted by the user - {{ user }}.</p>
+<div>
+    <p>{{ reply.date|date:'d.m.Y' }}</p>
+    <h3><a href="http://127.0.0.1:8000{% url  'ad_detail' reply.advertise.pk %}">{{ instance.title }}</a></h3>
+    <p>{{ reply.reply }}</p>
+</div>
+</body>
+</html>
