@@ -11,15 +11,16 @@
     <p>
         {{ ad.content_upload|safe }}
     </p>
-
+    {% if user.is_authenticated %}
     <p><a class="btn btn-secondary" href="{% url 'ad_edit' ad.pk %}">Edit ad</a>
         <a class="btn btn-danger" href="{% url 'ad_delete' ad.pk %}">Delete ad</a></p>
-
+    {% endif %}
+    <hr>
     <h4>Reply's</h4>
     {% for rep in ad.reply_set.all %}
     <p> {{ rep.author }} &middot; {{ rep }}</p>
     {% endfor %}
-    <hr>
+    <br>
 
     <h4>Add reply</h4>
     {% if user.is_authenticated %}
