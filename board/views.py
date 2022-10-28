@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse_lazy, reverse
@@ -24,7 +25,7 @@ class AdsListView(ListView):
     paginate_by = 10
 
 
-class UserAdsListView(ListView):
+class UserAdsListView(LoginRequiredMixin, ListView):
     model = Advertisement
     ordering = '-date'
     context_object_name = 'ads_list'
@@ -61,7 +62,6 @@ class ReplyGet(DetailView):
         context['author_rep'] = self.request.user
         return context
 
-
 class ReplyPost(FormView, LoginRequiredMixin, SingleObjectMixin):
     model = Advertisement
     form_class = ReplyForm
@@ -82,7 +82,6 @@ class ReplyPost(FormView, LoginRequiredMixin, SingleObjectMixin):
         ad = self.get_object()
         return reverse('ad_detail', kwargs={'pk': ad.pk})
 
-
 class CreateAdView(LoginRequiredMixin, CreateView):
     form_class = AdvertisementForm
     context_object_name = 'ad'
@@ -93,13 +92,11 @@ class CreateAdView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-
 class AdUpdateView(LoginRequiredMixin, UpdateView):
     model = Advertisement
     form_class = AdvertisementForm
     template_name = 'board/ad_create.html'
     context_object_name = 'ad'
-
 
 class AdDeleteView(LoginRequiredMixin, DeleteView):
     model = Advertisement
@@ -107,8 +104,7 @@ class AdDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('ads_list')
     context_object_name = 'ad'
 
-
-class ReplaysSearchView(ListView):
+class ReplaysSearchView(LoginRequiredMixin, ListView):
     model = Reply
     template_name = 'board/replays_list.html'
     context_object_name = 'rep_list'
@@ -124,14 +120,13 @@ class ReplaysSearchView(ListView):
         context['filterset'] = self.filterset
         return context
 
-
-class ReplyDeleteView(DeleteView):
+class ReplyDeleteView(LoginRequiredMixin, DeleteView):
     model = Reply
     template_name = 'board/reply_delete.html'
     context_object_name = 'reply'
     success_url = reverse_lazy('replays_list')
 
-
+@login_required
 def accept_reply(request, pk):
     rep = Reply.objects.get(pk=pk)
     rep.is_accept = True
