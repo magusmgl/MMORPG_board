@@ -6,7 +6,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from allauth.account.forms import LoginForm
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, EnterOnetimeCodeForm
 from .models import OneTimeCode
 
 
@@ -29,7 +29,7 @@ def usual_login_view(request):
             form.add_error(None, "User was not found (check your username and password)")
     else:
         form = LoginForm()
-    return render(request, template_name='account/login.html', context={'form': form})
+    return render(request, template_name='accounts/login.html', context={'form': form})
 
 
 def login_with_code_view(request):
