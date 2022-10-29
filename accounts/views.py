@@ -1,6 +1,6 @@
 import random
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.urls import reverse_lazy
@@ -32,18 +32,20 @@ def usual_login_view(request):
     return render(request, template_name='accounts/login.html', context={'form': form})
 
 
-def login_with_code_view(request):
-    # todo
+def login_with_code_view(request, pk):
+    user = get_user_model().objects.get(pk=pk)
     if request.method == 'POST':
-        username = request.POST['username']
+        form = EnterOnetimeCodeForm(request.POST)
         code = request.POST['code']
-        if OneTimeCode.objects.filter(code=code, user__username=username).exists():
-            login(request, request.user)
+        if OneTimeCode.objects.filter(code=code, user=user).exists():
+            login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
+            return redirect('ads_list')
         else:
-    # form.add_error(None, "User was not found (check your username and password)")
+            form.add_error(None, 'Login verification code is incorrect')
     else:
-        pass
-    return render(request, template_name='accounts/enter_onetime_code', context={})
+        form = EnterOnetimeCodeForm()
+    return render(request, template_name='accounts/enter_onetime_code.html',
+                  context={'form': form, 'username': user.username})
 
 
 def send_onetime_code(request):
