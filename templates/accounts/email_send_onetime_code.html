@@ -6,8 +6,8 @@
     <title>Website login confirmation</title>
 </head>
 <body>
-<p> Hello {{ user }},</p>
+<p> Hello {{ user.username }},</p>
 <p>To confirm the entrance to the site, enter the following code - {{ code }}, on this
-    <a href="http://127.0.0.1:8000{% url 'code_entry_page'  %}">page</a>.</p>
+    <a href="http://127.0.0.1:8000{% url 'code_entry_page' user.pk %}">page</a>.</p>
 </body>
 </html>
