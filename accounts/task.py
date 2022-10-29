@@ -41,3 +41,8 @@ def send_email(html_content, letter_subject, email_to):
     )
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
+
+
+@shared_task()
+def deleting_onetime_code(pk):
+    OneTimeCode.objects.get(pk=pk).delete()
