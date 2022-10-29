@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -18,3 +19,7 @@ class CustomUserChangeForm(UserChangeForm):
             'email',
             'username',
         )
+
+class EnterOnetimeCodeForm(forms.Form):
+    username = forms.CharField(max_length=200)
+    code = forms.IntegerField()
