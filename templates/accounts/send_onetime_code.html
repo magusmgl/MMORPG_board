@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block title %}Log In{% endblock title %}
+{% block content %}
+<br>
+<h4> Hello!</h4>
+<p>To confirm the entrance to the site, we sent a one-time code to your email.
+    Open the email and follow the instructions.<p>
+    <hr>
+<p>Back to <a href="{% url 'ads_list' %}">main page</a>.</p>
+{% endblock content %}
