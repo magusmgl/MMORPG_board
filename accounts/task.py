@@ -11,9 +11,9 @@ from .models import OneTimeCode
 def send_onetme_code_to_email(pk):
     obj = OneTimeCode.objects.get(pk=pk)
     code = obj.code
-    username = obj.user.username
+    user = obj.user
     email = obj.user.email
-    email_html = create_email_template(username,
+    email_html = create_email_template(user,
                                        code,
                                        template='accounts/email_send_onetime_code.html')
     send_email(html_content=email_html,
