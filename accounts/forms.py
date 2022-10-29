@@ -20,6 +20,6 @@ class CustomUserChangeForm(UserChangeForm):
             'username',
         )
 
+
 class EnterOnetimeCodeForm(forms.Form):
-    username = forms.CharField(max_length=200)
     code = forms.IntegerField()
