@@ -13,7 +13,7 @@ from .views import (
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('login/entry_code/', login_with_code_view, name='code_entry_page'),
+    path('login/entry_code/<int:pk>', login_with_code_view, name='code_entry_page'),
     path('login/send_code', send_onetime_code, name='send_onetime_code'),
     path('login/', usual_login_view, name='login_with_verification_code'),
 ]
