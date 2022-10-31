@@ -17,6 +17,7 @@ class SignupPageView(generic.CreateView):
 
 
 def usual_login_view(request):
+    form = LoginForm()
     if request.method == 'POST':
         form = LoginForm(request.POST)
         user_login = request.POST['login']
@@ -27,9 +28,10 @@ def usual_login_view(request):
             return redirect('send_onetime_code')
         else:
             form.add_error(None, "User was not found (check your username and password)")
-    else:
-        form = LoginForm()
-    return render(request, template_name='accounts/login.html', context={'form': form})
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/login.html', context)
 
 
 def login_with_code_view(request, pk):

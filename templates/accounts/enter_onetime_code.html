@@ -8,9 +8,7 @@
 <p>To log in, enter the confirmation code sent to your email:</p>
 <form method="post" action="">
     {% csrf_token %}
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="One-time login code" aria-label="One-time login codeя" aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Submit</button>
-    </div>
+    {{ form.as_p }}
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
 </form>
 {% endblock content %}
